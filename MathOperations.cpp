@@ -6,6 +6,9 @@
 #include<string>
 #include "MathOperations.h"
 
+
+// test changes
+
 MathOperations::MathOperations() {
     operand1 = 0;
     operand2 = 0;
@@ -56,7 +59,7 @@ void MathOperations::Multiplication() {
 
 // set theoperator to const DivisionSymbol, it is ASCII code for obelus
 // apply the division operation to operand1 and operand2
-// set the answer equal to operand1 ÷ operand2
+// set the answer equal to operand1 ï¿½ operand2
 void MathOperations::Division() {
     theoperator = DivisionSymbol;
     answer = operand1 / operand2;
