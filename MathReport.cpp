@@ -27,11 +27,14 @@
 
 // return the value of numCorrectAnswers
 	int MathReport::getNumOfCorrectAnswers() const {
+		return numCorrectAnswers;
+
 
 }
 
 // return the value of numWrongAnswers
 	int MathReport::getNumOfWrongAnswers() const {
+		return numWrongAnswers;
 
 }
 
@@ -39,6 +42,9 @@
 // if showAnswer is true, display questions solved with correct answers
 //                 otherwise, display questions solved without answers
 	void MathReport::generateReport(bool showAnswer) const {
+		if (showAnswer = true) {
+			cout<<
+		}
 
 }
 
