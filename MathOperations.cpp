@@ -21,6 +21,7 @@ MathOperations::MathOperations() {
 void MathOperations::setOperands(int op1, int op2) {
     operand1 = op1;
     operand2 = op2;
+ 
 }
 // get the current value of the private data member: theoperator
 char MathOperations::getOperator() const {
@@ -30,6 +31,14 @@ char MathOperations::getOperator() const {
 // return the value of the data member: answer
 int MathOperations::getAnswer() const {
     return answer;
+}
+
+int MathOperations::getOperand1() const {
+    return operand1;
+}
+
+int MathOperations::getOperand1() const {
+    return operand2;
 }
 
 // set theoperator to '+'
