@@ -31,6 +31,9 @@ public:
     // return the value of the data member: answer
     int getAnswer() const;
 
+    int getOperand1() const;
+    int getOperand2() const;
+
     // set theoperator to '+'
     // apply the addition operation to operand1 and operand2
     // set the answer equal to operand1 + operand2
