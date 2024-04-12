@@ -13,7 +13,7 @@
 using namespace std;
 
 const int MAXDIGITS = 4;    // the maximum digits of operands or answers
-const char DivisionSymbol = char(246);      // ASCII code for "÷"
+const char DivisionSymbol = char(246);      // ASCII code for "Ã·"
 
 class MathOperations
 {
@@ -48,7 +48,7 @@ public:
 
     // set theoperator to const DivisionSymbol, it is ASCII code for obelus
     // apply the division operation to operand1 and operand2
-    // set the answer equal to operand1 ÷ operand2
+    // set the answer equal to operand1 Ã· operand2
     void Division();
 
     // if answer == response, it returns true

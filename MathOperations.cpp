@@ -1,80 +1,86 @@
+/* File: MathOperations.cpp
+ * Course: CS215-00x
+ * Project: Lab 9 (first part of Project 2)
+ * Purpose: provide the complete implementation of the class named MathOperations
+ * Author: (your name)
+ */
 #include <iostream>
-#include<iomanip>
-//#include<cstdlib>
-//#include<ctime>
-#include <vector>
-#include<string>
+#include <iomanip>
+#include <limits>
 #include "MathOperations.h"
 
-
-// test changes
-
-MathOperations::MathOperations() {
+ // default constructor    
+MathOperations::MathOperations()
+{
     operand1 = 0;
     operand2 = 0;
-    answer = 0;
-    theoperator = ' ';
-
+    theoperator = '\0';
+    answer = -1;
 }
-// get the current value of the private data member: theoperator
 
-void MathOperations::setOperands(int op1, int op2) {
+// set the private data members: operand1 and operand2
+// to op1 and op2 respectively
+void MathOperations::setOperands(int op1, int op2)
+{
     operand1 = op1;
     operand2 = op2;
+    theoperator = '\0';
+    answer = -1;
 }
-// get the current value of the private data member: theoperator
-char MathOperations::getOperator() const {
+
+// read the current value of the private data member: current operator
+char MathOperations::getOperator() const
+{
     return theoperator;
 }
 
 // return the value of the data member: answer
-int MathOperations::getAnswer() const {
+int MathOperations::getAnswer() const
+{
     return answer;
 }
 
-// set theoperator to '+'
 // apply the addition operation to operand1 and operand2
 // set the answer equal to operand1 + operand2
-void MathOperations::Addition() {
+void MathOperations::Addition()
+{
     theoperator = '+';
     answer = operand1 + operand2;
-
 }
 
-// set theoperator to '-'
 // apply the subtraction operation to operand1 and operand2
 // set the answer equal to operand1 - operand2
-void MathOperations::Subtraction() {
+void MathOperations::Subtraction()
+{
     theoperator = '-';
     answer = operand1 - operand2;
 }
 
-// set theoperator to '*'
 // apply the multiplication operation to operand1 and operand2
 // set the answer equal to operand1 * operand2
-void MathOperations::Multiplication() {
+void MathOperations::Multiplication()
+{
     theoperator = '*';
     answer = operand1 * operand2;
 }
 
 // set theoperator to const DivisionSymbol, it is ASCII code for obelus
 // apply the division operation to operand1 and operand2
-// set the answer equal to operand1 � operand2
-void MathOperations::Division() {
+// set the answer equal to operand1 / operand2
+void MathOperations::Division()
+{
     theoperator = DivisionSymbol;
     answer = operand1 / operand2;
 }
 
 // if answer == response, it returns true
 // otherwise it returns false
-bool MathOperations::checkAnswer(int response) const {
-
-    if (answer == response) {
+bool MathOperations::checkAnswer(int response) const
+{
+    if (response == answer)
         return true;
-    }
-    else {
+    else
         return false;
-    }
 }
 
 //display the question in the format described in the problem statement
@@ -83,42 +89,35 @@ bool MathOperations::checkAnswer(int response) const {
 //  +  78
 //  _____
 //
-void MathOperations::print() const {
-
-    cout << setw(3) << operand1 << endl;
-    cout << theoperator << operand2 << endl;
-    cout << "___________" << endl;
+void MathOperations::print() const
+{
+    cout << "  " << setw(MAXDIGITS) << operand1 << endl;
+    cout << " " << theoperator << setw(MAXDIGITS) << operand2 << endl;
+    cout << " " << "-----" << endl;
 }
 
-// display the question by calling print() first
-// then ask the user for the answer
+// First display the questions by calling print() member function
+// it repeatedly asks the user for the answer until a valid integer has been collected
 // it returns the valid user answer collected from the user input
-int MathOperations::collectUserAnswer() const {
-    bool toQuit = false;
-    print();
-    do {
+int MathOperations::collectUserAnswer() const
+{
+    this->print();
+    int studentAnswer; // The student's answer
+    cout << "Please type your answer: " << endl;
+    cin >> studentAnswer;
 
-        cout << "Enter your answer" << endl;
-        int UserAnswer;
-        cin >> UserAnswer;
-        if (!cin.fail()) {
-            cin.ignore(numeric_limits<int>::max(), '\n'); //extra and ignore any bad
-            return UserAnswer;
-        }
-        else {
-            cin.clear();
-            string invalidOption;
-            cin >> invalidOption;
-            if (invalidOption == "Q" || invalidOption == "q")
-                toQuit = true;
-
-            else
-                cout << "Invalid Input!Please try again" << endl;
-
-        }
+    // if user-input is not a valid integer, allow the user to try again and again...
+    while (cin.fail())
+    {
+        cin.clear();
         cin.ignore(numeric_limits<int>::max(), '\n');
+        cout << "Invalid input! Please try again..." << endl;
+        cout << "Please type your answer: " << endl;
+        cin >> studentAnswer;
+    }
 
-    } while (!toQuit);
-    return 0;
+    cin.ignore(numeric_limits<int>::max(), '\n');  //extract any possible leftover in the input stream
+
+    // when the valid integer is collected
+    return studentAnswer;
 }
-

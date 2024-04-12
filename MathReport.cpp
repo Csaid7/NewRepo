@@ -1,20 +1,32 @@
-#include <iostream>
-#include<iomanip>
-#include <vector>
-#include<string>
-#include "MathReport.h"
+ #include "/Users/eakwa/Documents/GitHub/csaid7/MathReport.h"
+ 
+ // default constructor initializes private variables
+//  int numCorrectAnswers;  // number of correctly answered questions
+//     int numWrongAnswers;  // number of wrong answers
+//     vector<MathOperations> mathQuestions; // sequence of questions
+//     list<MathOperations> errorList;  // sequence of questions with wrong answers in first try, need to practice more
 
-// default constructor
-	MathReport::MathReport() {
+MathReport::MathReport()
+{
+    numCorrectAnswers = 0;
+    numWrongAnswers = 0;
+    // vector<MathOperations> mathQuestions;
+    // list<MathOperations> errorList;
+    
+    // create empty vector and list
+    vector<MathOperations> mathQuestions;
+    list<MathOperations> errorList;
+}
 
-	}
+// add a Question object into the vector of mathQuestions
+// and the response to check with the correct answer:
+// if response is correct, increase numCorrectAnswers
+// otherwise, increase numWrongAnswers
+// void insert(MathOperations newQuestions, int response);
 
-// add a newQuestion into the vector of mathQuestions
-// and the response to check with the correct answer: 
-//    if response is correct, increase numCorrectAnswers
-//    otherwise, increase numWrongAnswers and also insert newQuestion to errorList
-	void MathReport::insert(MathOperations newQuestion, int response) {
-		mathQuestions.push_back(newQuestion);
+void MathReport::insert(MathOperations newQuestion, int response)
+{
+        mathQuestions.push_back(newQuestion);
 		if (newQuestion.checkAnswer(response)) {
 			numCorrectAnswers++;
 		}
@@ -22,45 +34,85 @@
 			errorList.push_back(newQuestion);
 			numWrongAnswers++;
 		}
-
 }
 
-// return the value of numCorrectAnswers
-	int MathReport::getNumOfCorrectAnswers() const {
-
+// return the number of numCorrectAnswers
+int MathReport::getNumOfCorrectAnswers() const
+{
+    return numCorrectAnswers;
 }
 
-// return the value of numWrongAnswers
-	int MathReport::getNumOfWrongAnswers() const {
-
+// return the number of numWrongAnswers
+int MathReport::getNumOfWrongAnswers() const
+{
+    return numWrongAnswers;
 }
 
 // generate a brief report
 // if showAnswer is true, display questions solved with correct answers
-//                 otherwise, display questions solved without answers
-	void MathReport::generateReport(bool showAnswer) const {
-
+// otherwise, display questions without answers
+void MathReport::generateReport(bool showAnswer) const
+{
+    if (showAnswer)
+    {
+        cout << "Congratulations! " << mathQuestions.back().getAnswer() << " is the right answer." << endl;
+        cout << "Excellent! Your answers are all correct! No more practice is needed:)" << endl;
+    }
+    else
+    {
+        cout << "You have solved the following " << mathQuestions.size() << " math problems:" << endl;
+        for (int i = 0; i < mathQuestions.size(); i++)
+        {
+            cout << "Question : " << to_string(i + 1) << endl;
+            mathQuestions[i].print(); // Prints question
+            cout << endl;
+            cout << "-----" << endl;
+            cout << mathQuestions[i].getAnswer() << endl;
+        }
+    }
+    cout << "----------------------------------" << endl;
+    cout << "Your answered " << getNumOfCorrectAnswers() << " questions correctly." << endl;
+    cout << "Your made " << getNumOfWrongAnswers() << " mistakes." << endl;
+    cout << "Great job!" << endl;
+    cout << "Thank you for using Math Tutor." << endl;
 }
 
 // display the questions in errorList for practice again and collect the user answer
-// then check if the answer is correct so that it can be removed from the errorList
-// it returns false if all questions in errorList have been corrected and removed from the errorList
-// otherwise returns true: errorList is not empty yet, need more practice
-	bool MathReport::needMorePractice() {
-		while (it != errorList.end()) {
-			int answer = it->collectUsesrAnswer();
-			//int answer=(*it).collectUserAnswer()
-			if (*it.checkAnswer(answer) == true) {
-		// remove the current node ; increase numcorrect answers and decrease numwrongasnwer
-				it = errorList.erase(it);
-				numCorrectAnswers++;
-				numWrongAnswers--;
-
-			}//the asnwers the question wrong
-			else {
-				it++;
-			}
-			if
-		}
-		
+// and check if the answer is correct so that it can be removed from the errorList
+// return false if all questions have been corrected and removed from the errorList
+// otherwise return true: errorList is not empty yet, need more practice
+bool MathReport::needMorePractice()
+{
+    if (errorList.empty())
+    {
+        return false;
+    }
+    else
+    {
+        cout << "You have " << errorList.size() << " questions to practice again." << endl;
+        cout << "Please solve the following questions:" << endl;
+        for (list<MathOperations>::iterator it = errorList.begin(); it != errorList.end(); it++)
+        {
+            int i;
+            for (i = 0; i < mathQuestions.size(); i++)
+            {
+                cout << "Question : " << to_string(i + 1) << endl;
+                mathQuestions[i].print(); // Prints question
+                cout << endl;
+                cout << "-----" << endl;
+                int response;
+                cout << "Please enter your answer: ";
+                cin >> response;
+            if (it->checkAnswer(response))
+            {
+                cout << "Congratulations! " << response << " is the right answer." << endl;
+                errorList.erase(it);
+            }
+            else
+            {
+                cout << "Sorry, the answer is wrong. Please try again." << endl;
+            }
+        }
+        return true;
+    }
 }
